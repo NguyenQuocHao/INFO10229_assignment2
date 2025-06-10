@@ -1,160 +1,30 @@
-// Employee.swift
 // This code was written by Hao Nguyen, 991521091
-class Employee {
-    var id: Int
-    var name: String
-    var salary: Double {
-        return 0
-    }
+
+var input: String = ""
+while (!userQuits(input: input)) {
+    printInstructions()
+    input = readLine() ?? ""
     
-    init(id: Int, name: String) {
-        self.id = id
-        self.name = name
-    }
-    
-    static func validateSalary(salary: Double) -> Bool {
-        if (salary < 0) {
-            print("Salary/Rate cannot be less than 0")
-            return false
-        }
-        
-        return true
-    }
-    
-    static func validateId(id: Int) -> Bool {
-        if (id <= 0) {
-            print("ID cannot be less than or equal to 0")
-            return false
-        }
-        
-        return true
-    }
-    
-    func displayDetails() {
-        print("ID: \(id) Name: \(name) Salary: $\(salary)")
+    switch input {
+        case "q":
+            print("Thanks for using! Exiting...")
+            break
+        case "1":
+            showAddFullTimeEmployeeMenu()
+        case "2":
+            showAddPartTimeEmployeeMenu()
+        case "3":
+            viewEmployees()
+        case "4":
+            removeEmployeeMenu()
+        case "5":
+            searchEmployeeMenu()
+        default:
+            print("Invalid menu option. Please try again.")
+            printDelimeter()
     }
 }
 
-// FullTimeEmployee.swift
-// This code was written by Hao Nguyen, 991521091
-class FullTimeEmployee : Employee {
-    var monthlySalary: Double
-    override var salary: Double {
-        get {
-            return self.monthlySalary
-        }
-    }
-        
-    init(id: Int, name: String, monthlySalary: Double) {
-
-        self.monthlySalary = monthlySalary
-        
-        super.init(id: id, name: name)
-    }
-    
-    func calculateTax() -> Double {
-        return salary * 20 / 100
-    }
-    
-    override func displayDetails() {
-        super.displayDetails()
-        
-        print("Tax: \(calculateTax())")
-    }
-}
-
-// PartTimeEmployee.swift
-// This code was written by Hao Nguyen, 991521091
-class PartTimeEmployee : Employee, Taxable {
-    var hourlyRate: Double
-    var hoursWorked: Int
-    override var salary: Double {
-        get {
-            return self.hourlyRate * Double(self.hoursWorked)
-        }
-    }
-
-    init(id: Int, name: String, hourlyRate: Double, hoursWorked: Int) {
-        self.hourlyRate = hourlyRate
-        self.hoursWorked = hoursWorked
-        
-        super.init(id: id, name: name)
-    }
-    
-    static func validateHoursWorked(hours: Int) -> Bool {
-        if (hours < 0) {
-            print("Hours cannot be less than 0")
-            return false
-        }
-        
-        return true
-    }
-    
-    func calculateTax() -> Double {
-        return salary * 10 / 100
-    }
-
-    override func displayDetails() {
-        super.displayDetails()
-        
-        print("Hourly Rate: \(hourlyRate) Hours Worked: \(hoursWorked) Tax: \(calculateTax())")
-    }
-}
-
-// Taxable.swift
-// This code was written by Hao Nguyen, 991521091
-protocol Taxable {
-    func calculateTax() -> Double
-}
-
-// EmployeeManager.swift
-// This code was written by Hao Nguyen, 991521091
-class EmployeeManager {
-    private static var _employeeList: [Int: Employee] = [:]
-    
-    static func getEmployeeList() -> [Employee] {
-        return Array(_employeeList.values)
-    }
-    
-    static func getEmployee(id: Int) -> Employee? {
-        return _employeeList[id]
-    }
-    
-    static func containsEmployee(id: Int) -> Bool {
-        return _employeeList[id] != nil
-    }
-    
-    static func addFullTimeEmployee(employee: FullTimeEmployee) {
-        if (containsEmployee(id: employee.id)) {
-            print("Employee with id \(employee.id) already exists");
-            return
-        }
-        
-        _employeeList[employee.id] = employee
-    }
-    
-    static func addPartTimeEmployee(employee: PartTimeEmployee) {
-        if (containsEmployee(id: employee.id)) {
-            print("Employee with id already exists")
-            return
-        }
-        
-        _employeeList[employee.id] = employee
-    }
- 
-     static func removeEmployee(id: Int) {
-        if (!containsEmployee(id: id)) {
-            print("Employee with id \(id) doesn't exist")
-            return
-        }
-        
-        _employeeList.removeValue(forKey: id)
-        print("Employee with id id \(id) doesn't exist")
-    }
-}
-
-// Program.swift
-// This code was written by Hao Nguyen, 991521091
 func showAddFullTimeEmployeeMenu() {
     let employeeId = promptEmployeeId()
     
@@ -333,27 +203,3 @@ func printInstructions() {
     printDelimeter()
 }
 
-var input: String = ""
-while (!userQuits(input: input)) {
-    printInstructions()
-    input = readLine() ?? ""
-    
-    switch input {
-        case "q":
-            print("Thanks for using! Exiting...")
-            break
-        case "1":
-            showAddFullTimeEmployeeMenu()
-        case "2":
-            showAddPartTimeEmployeeMenu()
-        case "3":
-            viewEmployees()
-        case "4":
-            removeEmployeeMenu()
-        case "5":
-            searchEmployeeMenu()
-        default:
-            print("Invalid menu option. Please try again.")
-            printDelimeter()
-    }
-}
