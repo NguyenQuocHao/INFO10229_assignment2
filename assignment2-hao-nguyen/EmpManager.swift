@@ -1,5 +1,5 @@
 // This code was written by Hao Nguyen, 991521091
-class EmployeeManager {
+class EmpManager {
     private static var _employeeList: [Int: Employee] = [:]
     
     static func getEmployeeList() -> [Employee] {
