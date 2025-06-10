@@ -39,6 +39,6 @@ class EmployeeManager {
         }
         
         _employeeList.removeValue(forKey: id)
-        print("Employee with id id \(id) doesn't exist")
+        print("Employee with id \(id) was deleted successfully")
     }
 }
